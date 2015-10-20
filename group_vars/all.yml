@@ -1,0 +1,33 @@
+---
+ssh:
+  allow_groups: 'adm the_program'
+
+linux_groups:
+  the_program:
+    name: the_program
+    state: present
+    system: false
+
+linux_users:
+  colton:
+    createhome: true
+    groups: 'adm,deploy,sudo,the_program'
+    home: /home/colton
+    password: password
+    public_keys_absent: []
+    public_keys_present: []
+    shell: /bin/bash
+    state: absent
+    system: false
+    name: colton
+  jimbo:
+    createhome: true
+    groups: 'the_program'
+    home: /home/jimbo
+    password: 123jimbo456
+    public_keys_absent: []
+    public_keys_present: []
+    shell: /bin/bash
+    state: present
+    system: false
+    name: jimbo

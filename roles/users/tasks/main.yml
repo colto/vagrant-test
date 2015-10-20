@@ -1,0 +1,56 @@
+---
+- name: create groups
+  group:
+    name: "{{ item.value.name }}"
+    state: "{{ item.value.state }}"
+    system: "{{ item.value.system }}"
+  with_dict: linux_groups
+  tags:
+    - groups
+    - users
+
+- name: create users
+  user:
+    createhome: "{{ item.value.createhome }}"
+    home: "{{ item.value.home }}"
+    name: "{{ item.value.name }}"
+    password: "{{ item.value.password }}"
+    shell: "{{ item.value.shell }}"
+    state: "{{ item.value.state }}"
+    system: "{{ item.value.system }}"
+  with_dict: linux_users
+  tags:
+    - users
+
+- name: add users to groups
+  user:
+    name: "{{ item.value.name }}"
+    groups: "{{ item.value.groups }}"
+  with_dict: linux_users
+  when: item.value.state == 'present'
+  tags:
+    - groups
+    - users
+
+- name: add ssh public keys to users
+  authorized_key:
+    user: "{{ item.0.name }}"
+    key: "{{ item.1 }}"
+    state: present
+  with_subelements:
+    - linux_users
+    - public_keys_present
+  when: item.0.state == 'present'
+  tags:
+    - users
+
+- name: remove ssh public keys from users
+  authorized_key:
+    user: "{{ item.0.name }}"
+    key: "{{ item.1 }}"
+    state: absent
+  with_subelements:
+    - linux_users
+    - public_keys_absent
+  tags:
+    - users
