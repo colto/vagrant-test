@@ -1,0 +1,23 @@
+---
+- hosts: default
+  name: Install WordPress, MySQL, Nginx, and PHP-FPM
+  remote_user: root
+  sudo: yes
+
+  roles:
+    - nginx
+# ---
+# - hosts: all
+#   sudo: yes
+#   tasks:
+#     - name: Installs nginx web server
+#       apt: pkg=nginx state=installed update_cache=true
+#       notify:
+#         - start nginx
+#     - user: name=colto comment="Colton" uid=666 group=admin
+#     - name: Installs Git
+#       apt: pkg=git state=installed
+
+  handlers:
+    - name: start nginx
+      service: name=nginx state=started
