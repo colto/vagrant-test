@@ -3,6 +3,4 @@
   apt:
     pkg: mysql-server
     state: installed
-  notify:
-    - start mysql
   tags: mysql
