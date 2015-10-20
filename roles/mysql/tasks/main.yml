@@ -1,0 +1,8 @@
+---
+- name: Installs MySQL
+  apt:
+    pkg: mysql-server
+    state: installed
+  notify:
+    - start mysql
+  tags: mysql
