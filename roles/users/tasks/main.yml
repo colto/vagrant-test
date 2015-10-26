@@ -53,4 +53,5 @@
     - linux_users
     - public_keys_absent
   tags:
+    - group
     - users
