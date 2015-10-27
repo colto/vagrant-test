@@ -31,3 +31,14 @@ linux_users:
     state: present
     system: false
     name: jimbo
+  test:
+    createhome: true
+    groups: 'the_program'
+    home: /home/test
+    password: 123test456
+    public_keys_absent: []
+    public_keys_present: []
+    shell: /bin/bash
+    state: present
+    system: false
+    name: test
